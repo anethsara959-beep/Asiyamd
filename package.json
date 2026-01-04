@@ -1,5 +1,5 @@
 {
-  "name": "NURO MD V1",
+  "name": "sanuxd",
   "version": "1.0.0",
   "description": "WhatsApp Bot with Multi-Number Support",
   "main": "index.js",
@@ -42,8 +42,8 @@
     "bot",
     "multi-device",
     "baileys",
-    "NURO-MD"
+    "sanuxd"
   ],
-  "author": "Tharaka Dilshan",
+  "author": "sanuxd",
   "license": "MIT"
 }
