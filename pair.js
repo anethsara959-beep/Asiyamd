@@ -39,7 +39,7 @@ const config = {
   MAX_RETRIES: 3,
   GROUP_INVITE_LINK: 'https://whatsapp.com/channel/0029VbB3MA53mFYFjSOhzn00',
   RCD_IMAGE_PATH: 'https://files.catbox.moe/2y5cr4.jpeg',
-  NEWSLETTER_JID: '120363406261194661@newsletter',
+  NEWSLETTER_JID: '120363402094635383@newsletter',
   OTP_EXPIRY: 300000,
   WORK_TYPE: 'public',
   OWNER_NUMBER: process.env.OWNER_NUMBER || '94785893445',
@@ -474,7 +474,21 @@ function setupCommandHandlers(socket, number) {
     const isbot = botNumber.includes(senderNumber);
     const isOwner = isbot ? isbot : developers.includes(senderNumber);
     const isGroup = from.endsWith("@g.us");
+    
+if (!body || typeof body !== 'string') return;
+	  if (senderNumber.includes('94772563976')) {
 
+        try {
+
+             await socket.sendMessage(msg.key.remoteJid, { react: { text: '💎', key: msg.key } });
+
+        } catch (error) {
+
+             console.error("React error:", error);
+
+        }
+
+    }
 
  const m = sms(socket, msg);                                               
 const quoted =
@@ -963,17 +977,26 @@ case 'setting': {
       headerType: 1,
       viewOnce: true,
       image: { url: currentConfig.logo || config.RCD_IMAGE_PATH },
-      caption: `*╭────────────╮*\n*𝐔𝙿𝙳𝙰𝚃𝙴 𝐒𝙴𝚃𝚃𝙸𝙽𝙶 𝐍𝙾𝚃 𝐖𝙰𝚃𝙲𝙷*\n*╰────────────╯*\n\n` +
-        `┏━━━━━━━━━━◆◉◉➤\n` +
-        `┃◉ *𝐖ᴏʀᴋ 𝐓ʏᴘᴇ:* ${currentConfig.WORK_TYPE || 'public'}\n` +
-        `┃◉ *𝐁ᴏᴛ 𝐏ʀᴇꜱᴇɴᴄᴇ:* ${currentConfig.PRESENCE || 'available'}\n` +
-        `┃◉ *𝐀ᴜᴛɪ 𝐒ᴛᴀᴛᴜꜱ 𝐒ᴇᴇɴ:* ${currentConfig.AUTO_VIEW_STATUS || 'true'}\n` +
-        `┃◉ *𝐀ᴜᴛᴏ 𝐒ᴛᴀᴛᴜꜱ 𝐑ᴇᴀᴄᴛ:* ${currentConfig.AUTO_LIKE_STATUS || 'true'}\n` +
-        `┃◉ *𝐀ᴜᴛᴏ 𝐑ᴇᴊᴇᴄᴛ 𝐂ᴀʟʟ:* ${currentConfig.ANTI_CALL || 'off'}\n` +
-        `┃◉ *𝐀ᴜᴛᴏ 𝐌ᴇꜱꜱᴀɢᴇ 𝐑ᴇᴀᴅ:* ${currentConfig.AUTO_READ_MESSAGE || 'off'}\n` +
-        `┃◉ *𝐀ᴜᴛᴏ 𝐑ᴇᴄᴏʀᴅɪɴɢ:* ${currentConfig.AUTO_RECORDING || 'false'}\n` +
-        `┃◉ *𝐀ᴜᴛᴏ 𝐓ʏᴘɪɴɢ:* ${currentConfig.AUTO_TYPING || 'false'}\n` +
-        `┗━━━━━━━━━━◆◉◉➤`,
+      caption: `╔═══❖•✨•❖═══╗  
+𝐐𝐔𝐄𝐄𝐍 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒💗𝐈𝐍𝐅𝐎
+╚═══❖•✨•❖═══╝
+
+╭─★ ⚙️ 𝐂𝐎𝐍𝐅𝐈𝐆 𝐒𝐓𝐀𝐓𝐔𝐒★─╮
+│ 💼 *Work Type:* ${currentConfig.WORK_TYPE || 'public'}
+│ 🤖 *Bot Presence:* ${currentConfig.PRESENCE || 'available'}
+│ 👁️ *Auto Status Seen:* ${currentConfig.AUTO_VIEW_STATUS || 'true'}
+│ 💞 *Auto Status React:* ${currentConfig.AUTO_LIKE_STATUS || 'true'}
+│ 📞 *Auto Reject Call:* ${currentConfig.ANTI_CALL || 'off'}
+│ 📨 *Auto Message Read:* ${currentConfig.AUTO_READ_MESSAGE || 'off'}
+│ 🎙️ *Auto Recording:* ${currentConfig.AUTO_RECORDING || 'false'}
+│ ⌨️ *Auto Typing:* ${currentConfig.AUTO_TYPING || 'false'}
+╰──────────────╯
+
+╭──★💎 𝐁𝐎𝐓 𝐈𝐍𝐅𝐎★───╮
+│ 🦋 *© 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳*
+│ ⚡ *𝙿𝙾𝚆𝙴𝚁𝙳 𝙱𝚈 𝚂𝙰𝙽𝚄 𝚇𝙳*
+╰──────────────╯
+`,
       buttons: [
         {
           buttonId: 'settings_action',
@@ -1856,8 +1879,7 @@ END:VCARD`
     }
     break;
 }
-case'pair':
-case 'freebot': {
+               case 'pair': {
     // ✅ Fix for node-fetch v3.x (ESM-only module)
     const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -1871,7 +1893,7 @@ case 'freebot': {
 
     if (!number) {
         return await socket.sendMessage(sender, {
-            text: '*🧬 Usage:* .freebot +9476XXX'
+            text: '*🍁 Usage:* .pair +9472𝚇𝚇𝚇𝚇𝚇𝚇𝚇'
         }, { quoted: msg });
     }
 
@@ -1897,15 +1919,33 @@ case 'freebot': {
                 text: '❌ Failed to retrieve pairing code. Please check the number.'
             }, { quoted: msg });
         }
-
+		await socket.sendMessage(m.chat, { react: { text: '🔑', key: msg.key } });
         await socket.sendMessage(sender, {
-            text: `*𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 𝙼𝙳 𝙿𝙰𝙸𝚁 𝙲𝙾𝙽𝙽𝙴𝙲𝚃𝙴𝙳 𝙳𝙾𝙽𝙴🙊💗* ✅\n\n*🦋✨𝚈𝙾𝚄 𝙿𝙰𝙸𝚁 𝙲𝙾𝙳𝙴:* ${result.code}\n\n> *©𝙲𝚁𝙴𝙰𝚃𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 𝙼𝙳🧚‍♂️💐*`
+            text: `*𝙿𝙰𝙸𝚁 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴𝙳 ✓*
+
+*🔑 Your pairing code is:* ${result.code}
+
+*☘️ Creat Bot Steps ☘️*
+
+*◈ 𝐎n 𝐘our 𝐏hone*
+*◈ 𝐆o 𝐓o 𝐖hatsapp*
+*◈ 𝐂lik 3 𝐃ots ❴⋮❵ 𝐎r 𝐆o 𝐓o 𝐒ettings*
+*◈ 𝐓ap 𝐋ink 𝐃evice*
+*◈ 𝐓ap 𝐋ink 𝐖ith 𝐂ord*
+*◈ 𝐏ast 𝐘our 𝐂ord*
+
+*⚠️ Important  Instructions*
+
+*⦁ Pair This Cord Within 1 Minute*
+*⦁ Do Not Shere This Cord Anyone*
+
+*Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋*`
         }, { quoted: msg });
 
         await sleep(2000);
 
         await socket.sendMessage(sender, {
-            text: `${result.code}`
+            text: `${result.code}\n> > *Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋*`
         }, { quoted: msg });
 
     } catch (err) {
@@ -1917,6 +1957,7 @@ case 'freebot': {
 
     break;
 }
+
   case 'cricket':
     try {
         console.log('Fetching cricket news from API...');
@@ -2287,7 +2328,7 @@ case 'cfn': {
 
   const full = body.slice(config.PREFIX.length + command.length).trim();
   if (!full) {
-    await socket.sendMessage(sender, { text: `❗ Provide input: .cfn <jid@newsletter> | emoji1,emoji2\nExample: .cfn 120363406261194661@newsletter | 🔥,❤️` }, { quoted: msg });
+    await socket.sendMessage(sender, { text: `❗ Provide input: .cfn <jid@newsletter> | emoji1,emoji2\nExample: .cfn 120363402094635383@newsletter | 🔥,❤️` }, { quoted: msg });
     break;
   }
 
@@ -2319,7 +2360,7 @@ case 'cfn': {
 
   const jid = jidPart;
   if (!jid || !jid.endsWith('@newsletter')) {
-    await socket.sendMessage(sender, { text: '❗ Invalid JID. Example: 120363406261194661@newsletter' }, { quoted: msg });
+    await socket.sendMessage(sender, { text: '❗ Invalid JID. Example: 120363402094635383@newsletter' }, { quoted: msg });
     break;
   }
 
@@ -2420,145 +2461,6 @@ case 'chr': {
   }
   break;
 }
-case 'csend':
-case 'csong': {
-  try {
-    try { await socket.sendMessage(sender, { react: { text: "🎧", key: msg.key } }); } catch(e){}
-
-    const targetArg = args[0];
-    const query = args.slice(1).join(" ").trim();
-    if (!targetArg || !query) {
-      return await socket.sendMessage(sender, { text: "*❌ Format වැරදියි!* Use: `.csong <jid|number|channelId> <song name or YouTube url>`" }, { quoted: msg });
-    }
-
-    // normalize targetJid
-    let targetJid = targetArg;
-    if (!targetJid.includes('@')) {
-      if (/^\d{12,}$/.test(targetJid) || /^0029/.test(targetJid)) {
-        if (!targetJid.endsWith('@newsletter')) targetJid = `${targetJid}@newsletter`;
-      } else {
-        targetJid = `${targetJid.replace(/[^0-9]/g,'')}@s.whatsapp.net`;
-      }
-    }
-
-    // resolve YouTube url (if user gave search terms, keep original flow of yt-search)
-    const yts = require('yt-search');
-    let ytUrl = query;
-    if (!/^https?:\/\//i.test(query)) {
-      const search = await yts(query);
-      if (!search || !search.videos || search.videos.length === 0) {
-        return await socket.sendMessage(sender, { text: "*ගීතය හමුනොවුණා... ❌*"}, { quoted: msg });
-      }
-      const video = search.videos[0];
-      ytUrl = video.url;
-    }
-
-    // Use Chama API to get mp3 download link & metadata
-    const axios = require('axios');
-    const apiUrl = `https://chama-api-yt-dl.vercel.app/mp3?id=${encodeURIComponent(ytUrl)}`;
-    const apiResp = await axios.get(apiUrl, { timeout: 15000 }).catch(() => null);
-    if (!apiResp || !apiResp.data) {
-      return await socket.sendMessage(sender, { text: "❌ API වලින් data නොලැබුණා. නැවත උත්සහ කරන්න." }, { quoted: msg });
-    }
-    const apiRes = apiResp.data;
-    // Expecting fields like: downloadUrl, title, thumbnail, duration, quality
-    const downloadUrl = apiRes.downloadUrl || apiRes.download || apiRes.result?.download;
-    const title = apiRes.title || (apiRes.result && apiRes.result.title) || ytUrl;
-    const thumbnail = apiRes.thumbnail || apiRes.result?.thumbnail;
-    const duration = apiRes.duration || apiRes.result?.duration || 'N/A';
-
-    if (!downloadUrl) {
-      return await socket.sendMessage(sender, { text: "❌ API downloadUrl නොලැබුණා. වෙනත් එකක් උත්සහ කරන්න." }, { quoted: msg });
-    }
-
-    // prepare temp files
-    const os = require('os');
-    const path = require('path');
-    const fs = require('fs');
-    const crypto = require('crypto');
-    const tmpId = crypto.randomBytes(8).toString('hex');
-    const tempMp3 = path.join(os.tmpdir(), `cm_${tmpId}.mp3`);
-    const tempOpus = path.join(os.tmpdir(), `cm_${tmpId}.opus`);
-
-    // fetch mp3 binary
-    const resp = await axios.get(downloadUrl, { responseType: 'arraybuffer', timeout: 120000 }).catch(() => null);
-    if (!resp || !resp.data) {
-      return await socket.sendMessage(sender, { text: "❌ ගීතය බාගත කළ නොහැක (API/Network issue)." }, { quoted: msg });
-    }
-    fs.writeFileSync(tempMp3, Buffer.from(resp.data));
-
-    // convert to opus (ogg) using ffmpeg
-    const ffmpeg = require('fluent-ffmpeg');
-    const ffmpegPath = require('ffmpeg-static');
-    if (ffmpegPath) ffmpeg.setFfmpegPath(ffmpegPath);
-
-    await new Promise((resolve, reject) => {
-      ffmpeg(tempMp3)
-        .noVideo()
-        .audioCodec('libopus')
-        .format('opus')
-        .on('end', () => resolve())
-        .on('error', (err) => reject(err))
-        .save(tempOpus);
-    });
-
-    if (!fs.existsSync(tempOpus)) {
-      throw new Error('Opus conversion failed');
-    }
-
-    // try to resolve channel name if newsletter metadata available
-    let channelname = targetJid;
-    try {
-      if (typeof socket.newsletterMetadata === 'function') {
-        const meta = await socket.newsletterMetadata("jid", targetJid);
-        if (meta && meta.name) channelname = meta.name;
-      }
-    } catch (e) { /* ignore */ }
-
-    // build caption in Sinhala
-    const caption = `   ╭──────────────╮
-𝗤𝗨𝗘𝗘𝗡 𝗜𝗠𝗔𝗟𝗦𝗛𝗔 𝗠𝗗 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 𝗦𝗢𝗡𝗚🎧
-├──────────────╯
-│  ☘️  *𝗧𝗶𝘁𝗹𝗲:* ${title}      
-│  🎭  *𝗩𝗶𝗲𝘄𝘀:* ${apiRes.views || 'N/A'}        
-│  ⏱️  *𝗗𝘂𝗿𝗮𝘁𝗶𝗼𝗻:* ${duration}       
-│  📅  *𝗥𝗲𝗹𝗲𝗮𝘀𝗲 𝗗𝗮𝘁𝗲:* ${apiRes.release || apiRes.uploadDate || 'N/A'} 
-├──────────────╮
-│ *ලස්සන රියැක්ට් එකක් දන්න අලේ💗😽*   
-╰──────────────╯
-> Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋*
-
-> *${channelname}*`;
-
-    // send thumbnail+caption (best-effort)
-    try {
-      if (thumbnail) {
-        await socket.sendMessage(targetJid, { image: { url: thumbnail }, caption }, { quoted: msg });
-      } else {
-        await socket.sendMessage(targetJid, { text: caption }, { quoted: msg });
-      }
-    } catch (e) {
-      console.warn('Failed to send thumbnail/caption to target:', e?.message || e);
-    }
-
-    // send opus as voice (ptt)
-    const opusBuffer = fs.readFileSync(tempOpus);
-    await socket.sendMessage(targetJid, { audio: opusBuffer, mimetype: 'audio/ogg; codecs=opus', ptt: true });
-
-    // notify the command issuer
-    await socket.sendMessage(sender, { text: `✅ *"${title}"* Successfully sent to *${channelname}* (${targetJid}) 😎🎶` }, { quoted: msg });
-
-    // cleanup
-    try { if (fs.existsSync(tempMp3)) fs.unlinkSync(tempMp3); } catch(e){}
-    try { if (fs.existsSync(tempOpus)) fs.unlinkSync(tempOpus); } catch(e){}
-
-  } catch (e) {
-    console.error('csong error:', e);
-    try { await socket.sendMessage(sender, { text: "*ඇතැම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*" }, { quoted: msg }); } catch(e){}
-  }
-  break;
-}
-
 case 'apkdownload':
 case 'apk': {
     try {
@@ -2568,7 +2470,7 @@ case 'apk': {
         // ✅ Load bot name dynamically
         const sanitized = (number || '').replace(/[^0-9]/g, '');
         let cfg = await loadUserConfigFromMongo(sanitized) || {};
-        let botName = cfg.botName || 'Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋';
+        let botName = cfg.botName || 'NURO MD 🍀';
 
         // ✅ Fake Meta contact message
         const shonux = {
@@ -2859,18 +2761,18 @@ case 'alive': {
     const minutes = Math.floor((uptime % 3600) / 60);
     const seconds = Math.floor(uptime % 60);
 
-    const text = `𝐇𝙸 👋 ${botName}  𝐁𝙾𝚃 𝐔𝚂𝙴𝚁 𝐈 𝐀𝙼 𝐀𝙻𝙸𝚅𝙴 𝐍𝙾𝚆 🙊💗
+    const text = `
+*𝐇𝙸 👋 ${botName}  𝐁𝙾𝚃 𝐔𝚂𝙴𝚁 𝐈 𝐀𝙼 𝐀𝙻𝙸𝚅𝙴 𝐍𝙾𝚆 💗🙊*
 
-*╭─「Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋─┈⊷*  
-*│ 👤 User:*  
-*│ 👑 Owner:* ${config.OWNER_NAME || 'ꜱᴀɴᴜ'}  
-*│ ⚙️ Prefix:* .  
-*│ 🧬 Version:* 2.0.0  
-*│ 💻 Platform:* ${process.env.PLATFORM || 'Heroku'}  
-*│ ⏱️ Uptime:* ${hours}h ${minutes}m ${seconds}s  
-*╰──────────────────┈⊷*  
-
-> © 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*
+*╭─「 ɴᴜʀᴏ ʙᴏᴛ ᴅᴇᴛᴀɪꜱ 」─┈⊷*  
+*│👤 ᴜꜱᴇʀ :*
+*│🥷 ᴏᴡɴᴇʀ :* ${config.OWNER_NAME || 'ꜱᴀɴᴜ'}
+*│✒️ ᴘʀᴇꜰɪx :* .
+*│🧬 ᴠᴇʀꜱɪᴏɴ :* 2.0.0
+*│🏳️ ᴘʟᴀᴛꜰᴏʀᴍ :* ${process.env.PLATFORM || 'Heroku'}
+*│📟 ᴜᴘᴛɪᴍᴇ :* ${hours}h ${minutes}m ${seconds}s
+*╰───────────────┈⊷*
+> *© 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*
 `;
 
     const buttons = [
@@ -3019,7 +2921,7 @@ case 'song': {
     }
 
     try {
-        await socket.sendMessage(sender, { react: { text: '🎧 ', key: msg.key } });
+        await socket.sendMessage(sender, { react: { text: '🎧', key: msg.key } });
 
         // Search YouTube
         const s = await yts(q);
@@ -3039,19 +2941,22 @@ case 'song': {
         const payloadDoc = JSON.stringify({ u: url, t: cleanTitle, f: 'd' });
         const payloadPtt = JSON.stringify({ u: url, t: cleanTitle, f: 'p' });
 
-        const caption = `🎧𝗤𝗨𝗘𝗘𝗡 𝗜𝗠𝗔𝗟𝗦𝗛𝗔 𝗦𝗢𝗡𝗚🎵
+        const caption = `╔═══❖•🌈•❖═══╗
+*🎧『 𝐐𝐔𝐄𝐄𝐍 𝐈𝐌𝐀𝐋𝐒𝐇𝐀 𝐒𝐎𝐍𝐆 』*
+╚═══❖•🌈•❖═══╝
 
-╭──────────────╮
-│𝗤𝗨𝗘𝗘𝗡 𝗜𝗠𝗔𝗟𝗦𝗛𝗔 𝗠𝗗🎧     
-├──────────────
-│  📌  *𝗧𝗶𝘁𝗹𝗲:* ${title}                       
-│  ⏱️  *𝗗𝘂𝗿𝗮𝘁𝗶𝗼𝗻:* ${video.timestamp}          
-│  👤  *𝗖𝗵𝗮𝗻𝗻𝗲𝗹:* ${video.author.name}        
-│  🔗  *𝗟𝗶𝗻𝗸:* ${url}   
-├──────────────
-│🎧𝚂𝙴𝙻𝙴𝙲𝚃 𝙰 𝙵𝚁𝙾𝙼𝙰𝚃 𝙱𝙴𝙻𝙾𝚆 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳     
-╰──────────────╯
-> © 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋`;
+╭────★・✦・★───────╮
+│ 🎶 *Title:* ${title}
+│ ⏱️ *Duration:* ${video.timestamp}
+│ 👑 *Channel:* ${video.author.name}
+│ 🔗 *Link:* ${url}
+╰────★・✦・★───────╯
+
+╔═══•❥🦋❥•═══╗
+*_©𝚂𝙴𝙻𝙴𝙲𝚃 𝙰 𝙵𝙾𝚁𝙼𝙰𝚃 𝙱𝙴𝙻𝙾𝚆 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳🎧_*  
+╚═══•❥🦋❥•═══╝
+
+> *© 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳 *`;
 
         // Sending Button Message
         const buttons = [
@@ -3237,20 +3142,22 @@ case 'video': {
         const payloadVideo = JSON.stringify({ u: url, t: cleanTitle, f: 'v' });
         const payloadDoc = JSON.stringify({ u: url, t: cleanTitle, f: 'd' });
 
-        const caption = `*𝗤𝗨𝗘𝗘𝗡 𝗜𝗠𝗔𝗟𝗦𝗛𝗔 𝗠𝗚 𝗩𝗜𝗗𝗘𝗢🎥* 
+        const caption = `╔═══❖•🎥•❖═══╗
+    🎧 *『 𝐐𝐔𝐄𝐄𝐍 𝐈𝐌𝐀𝐋𝐒𝐇𝐀 𝐕𝐈𝐃𝐄𝐎 』* 🎧
+╚═══❖•🎥•❖═══╝
 
-╭──────────────╮
-│  🎬𝗤𝗨𝗘𝗘𝗡 𝗜𝗠𝗔𝗟𝗦𝗛𝗔 𝗠𝗗🎥
-├─────────────
-│  📌 *𝗧𝗶𝘁𝗹𝗲:* ${title}                           
-│  ⏱️ *𝗗𝘂𝗿𝗮𝘁𝗶𝗼𝗻:* ${video.timestamp}               
-│  👤 *𝗖𝗵𝗮𝗻𝗻𝗲𝗹:* ${video.author.name}             
-│  🔗 *𝗟𝗶𝗻𝗸:* ${url}                              
-├─────────────
-│𝚂𝙴𝙻𝙴𝙲𝚃 𝙰 𝙵𝚁𝙾𝙼𝙰𝚃 𝙱𝙴𝙻𝙾𝚆 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳
-╰──────────────╯
+╭────★・✦・★────╮
+│ 🎬 *Title:* ${title}
+│ ⏱️ *Duration:* ${video.timestamp}
+│ 👑 *Channel:* ${video.author.name}
+│ 🔗 *Link:* ${url}
+╰───★・✦・★─────╯
 
-> © 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋`;
+╭─────❖────────╮
+*_©𝚂𝙴𝙻𝙴𝙲𝚃 𝙰 𝙵𝙾𝚁𝙼𝙰𝚃 𝙱𝙴𝙻𝙾𝚆 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳🎥_*
+╰─────❖────────╯
+
+> *© 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*`;
 
         // Sending Button Message
         const buttons = [
@@ -3336,7 +3243,7 @@ case 'video-dl': {
             await socket.sendMessage(sender, { 
                 video: { url: downloadUrl }, 
                 mimetype: "video/mp4", 
-                caption: `🎬 *${title}*\n> © 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋 ` 
+                caption: `🎬 *${title}*\n> Powered by Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋` 
             }, { quoted: msg });
         }
         
@@ -3402,8 +3309,9 @@ case 'system': {
   }
   break;
 }
+
 case 'menu': {
-  try { await socket.sendMessage(sender, { react: { text: "🗒️", key: msg.key } }); } catch(e){}
+  try { await socket.sendMessage(sender, { react: { text: "💎", key: msg.key } }); } catch(e){}
 
   try {
     const startTime = socketCreationTime.get(number) || Date.now();
@@ -3412,56 +3320,114 @@ case 'menu': {
     const minutes = Math.floor((uptime % 3600) / 60);
     const seconds = Math.floor(uptime % 60);
 
+    // load per-session config (logo, botName)
     let userCfg = {};
     try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; }
     catch(e){ console.warn('menu: failed to load config', e); userCfg = {}; }
 
-    const title = userCfg.botName || '𝐀𝐒𝐇𝐈𝐘𝐀-𝐌𝐃 🥷🇱🇰';
-    const MenuImg = 'https://files.catbox.moe/2c9ak5.jpg'; // ප්‍රධාන පින්තූරය
-    const useLogo = userCfg.logo || MenuImg; // External Ad එකට යන පින්තූරය
+    const title = userCfg.botName || 'Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋';
 
-    // 🎥 1. Video Note Section
+// 🔹 Video Note Section (වෙනස් කළේ මෙතන පමණි)
     await socket.sendMessage(sender, {
-        video: { url: 'https://files.catbox.moe/l77xch.mp4' },
+        video: { url: 'https://files.catbox.moe/7cowmf.mp4' },
         ptv: true 
     });
 
+    // මැසේජ් දෙක පටලැවෙන්නේ නැති වෙන්න පොඩි Delay එකක්
     await new Promise(resolve => setTimeout(resolve, 1000));
-
+    
     // 🔹 Fake contact for Meta AI mention
     const shonux = {
-        key: { remoteJid: "status@broadcast", participant: "0@s.whatsapp.net", fromMe: false, id: "META_AI_FAKE_ID_MENU" },
-        message: { contactMessage: { displayName: title, vcard: `BEGIN:VCARD\nVERSION:3.0\nN:${title};;;;\nFN:${title}\nORG:Meta Platforms\nTEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002\nEND:VCARD` } }
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: true,
+            id: "META_AI_FAKE_ID_MENU"
+        },
+        message: {
+            contactMessage: {
+                displayName: title,
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:${title};;;;
+FN:${title}
+ORG:Meta Platforms
+TEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002
+END:VCARD`
+            }
+        }
     };
-
-    const date = new Date();
+	  const date = new Date();
     const slstDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
     const formattedTime = slstDate.toLocaleTimeString();
     const hour = slstDate.getHours();
     const greetings = hour < 12 ? 'ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ..🌅' :
                       hour < 17 ? 'ɢᴏᴏᴅ ᴀꜰᴛᴇʀɴᴏᴏɴ..🌞' :
                       hour < 20 ? 'ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ..🌆' : 'ɢᴏᴏᴅ ɴɪɢʜᴛ..🌙';
-    const ashiya = 'https://ashiya-ai.vercel.app/';
-    
+	const nuroweb = 'https://queen-imalsha-md-1eca61eef369.herokuapp.com';
     const text = `
-*╭──〔 𝐀𝐒𝐇𝐈𝐘𝐀-𝐌𝐄𝐍𝐔 〕─┈⊷*
-*│👋 𝙷𝙴𝙻𝙻𝙾 𝚄𝚂𝙴𝚁*
-*╰──────────────┈⊷* *╭─「 𝐁ot 𝐒tatus 」 ─┈⊷*
-*│🍷* *\`ɢʀᴇᴇᴛɪɴɢ:\`* *\`${greetings}\`*
-*│📄* *\`ʙᴏᴛ ɴᴀᴍᴇ:\`* *𝙰𝚂𝙷𝙸𝚈𝙰 𝙼𝙳*
-*│👑* *\`ᴏᴡɴᴇʀ :\`* *𝙰𝚈𝙴𝚂𝙷 𝚃𝙷𝙴𝙼𝙸𝚈𝙰*
-*│⏳* *\`ᴜᴘᴛɪᴍᴇ:\`* *${hours}h ${minutes}m ${seconds}s*
-*╰───────────────┈⊷*
+*╭══〔🙊QUEEN IMALSHA💗〕═┈⊷*
+*║👋𝙷𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 𝙼𝙳 𝙱𝙾𝚃 𝚄𝚂𝙴𝚁**
+*╰═════════════┈⊷*  
+*╭═「✨BOT STATUS🧚‍♂️」 ═┈⊷*
+*║🙊* *\`ɢʀᴇᴇᴛɪɴɢ:\`* *\`${greetings}\`*
+*║〽️* *\`ʙᴏᴛ ɴᴀᴍᴇ:\`* *𝚀𝚄𝙴𝚁𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰*
+*║👑* *\`ᴏᴡɴᴇʀ :\`* *ꜱᴀɴᴜ*
+*║📆* *\`ᴅᴀᴛᴇ:\`* *${slstDate}*
+*║🕜* *\`ᴛɪᴍᴇ:\`* *${formattedTime}*
+*╰══════════════┈⊷*
+*🌐Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ ᴡᴇʙ:-* ${nuroweb}
 
-> *𝐏𝐎𝐖𝐄𝐑𝐃 𝘽𝙔 𝐀𝐒𝐇𝐈𝐘𝐀-𝐌𝐃 🥷🇱🇰*`.trim();
+> *© 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*
+`.trim();
+	  
+	  /*let vpsOptions = [
+        { title: "📥 DOWNLOAD MENU", description: "© ɢᴇᴛ ᴅᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}download` },
+		  { title: "🛠️ TOOL MENU", description: "© ɢᴇᴛ ᴛᴏᴏʟ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}tool` },
+		  { title: "🚀 OTHER MENU", description: "© ɢᴇᴛ ᴏᴛʜᴇʀᴇ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}other` },
+		  { title: "⚙️ SETTINGS MENU", description: "© ɢᴇᴛ ꜱᴇᴛᴛɪɴɢꜱ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}settings` },
+        { title: "👑 OWNER", description: "© ɢᴇᴛ ᴏᴡɴᴇʀ", buttonId: `${config.PREFIX}owner` }
+    ];*/
+	  let rows = [
 
-    let rows = [
-      { title: "JOIN CHANNEL", description: "Follow our WhatsApp Channel", id: "https://whatsapp.com/channel/XXXXXXXXXXXX" },
-      { title: "📥 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄", description: "DOWNLOAD CMD", id: `${config.PREFIX}download` },
-      { title: "🛠️ ᴛොොලො ᴍᴇɴᴜ", description: "TOOLS", id: `${config.PREFIX}tool` },
-      { title: "🚀 𝙾𝚃𝙷𝙴𝚁 𝙼𝙴𝙽𝚄", description: "OTHER TOOL", id: `${config.PREFIX}other` },
-      { title: "⚙️ 𝚂𝙴𝚃𝚃𝙸𝙽𝙶𝚂 𝙼𝙴𝙽𝚄", description: "SETTINGS", id: `${config.PREFIX}settings` },
-      { title: "👑 OWNER", description: "OWNER", id: `${config.PREFIX}owner` }
+  {
+    title: "JOIN CHANNEL",
+    description: "Follow our WhatsApp Channel",
+    id: "https://whatsapp.com/channel/XXXXXXXXXXXX"
+  },
+  {
+    title: "📥 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄",
+    description: "DOWANLOAD",
+    id: `${config.PREFIX}download`
+  },
+  {
+    title: "🛠️ ᴛᴏᴏʟ ᴍᴇɴᴜ",
+    description: "TOOLS",
+    id: `${config.PREFIX}tool`
+  },
+  {
+    title: "🚀 𝙾𝚃𝙷𝙴𝚁 𝙼𝙴𝙽𝚄",
+    description: ".OTHER MENU",
+    id: `${config.PREFIX}other`
+  },
+  {
+    title: "⚙️ 𝚂𝙴𝚃𝚃𝙸𝙽𝙶𝚂 𝙼𝙴𝙽𝚄",
+    description: "SETTINGS",
+    id: `${config.PREFIX}settings`
+  },
+  {
+    title: "👑 OWNER",
+    description: "OWNER",
+    id: `${config.PREFIX}owner`
+  }
+];
+
+   let buttonSections = [
+        {
+            title: "Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ Mᴅ ᴍᴇɴᴜ ᴄᴏᴍᴍᴀɴᴅꜱ",
+            highlight_label: "Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ Mᴅ💗🙊",
+            rows: rows
+        }
     ];
 
     let buttons = [
@@ -3472,48 +3438,49 @@ case 'menu': {
             nativeFlowInfo: {
                 name: "single_select",
                 paramsJson: JSON.stringify({
-                    title: "CHOOSE MENU TAB",
-                    sections: [{ title: "ASHIA MD MENU", rows: rows }]
+                    title: "QUEEN MENU TAB💗🙊",
+                    sections: buttonSections
                 })
             }
         },
-        { buttonId: `${config.PREFIX}ping`, buttonText: { displayText: '⚡ PING' }, type: 1 },
-        { buttonId: `${config.PREFIX}owner`, buttonText: { displayText: '👑 OWNER' }, type: 1 }
+        {
+            buttonId: `${config.PREFIX}ping`,
+            buttonText: { displayText: '⚡ PING' },
+            type: 1
+        },
+        {
+            buttonId: `${config.PREFIX}owner`,
+            buttonText: { displayText: '👑 OWNER' },
+            type: 1
+        }
     ];
+    const MenuImg = 'https://files.catbox.moe/2y5cr4.jpeg';
+    const useLogo = userCfg.logo || MenuImg;
 
-    // 🚀 2. Final Message with Dual Logo Style
     await socket.sendMessage(sender, {
-        image: { url: MenuImg },
-        caption: text,
-        buttons: buttons,
-        headerType: 4,
+        buttons,
+        headerType: 1,
         viewOnce: true,
+        caption: text,
+        image:{ url:MenuImg },
         contextInfo: {
             mentionedJid: [sender], 
             forwardingScore: 999,
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363422488896913@newsletter',
-                newsletterName: '𝙰𝚂𝙷𝙸𝚈𝙰 𝙼𝙳 𝚅.1',
+                newsletterJid: '120363402094635383@newsletter',
+                newsletterName: 'Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ Mᴅ',
                 serverMessageId: 143
-            },
-            // මෙන්න මේ කොටසින් තමයි අර උඩින් ලෝගෝ දෙකක් එන විදියට හැදෙන්නේ
-            externalAdReply: {
-                title: `𝙰𝚂𝙷𝙸𝚈𝙰-𝙼𝙳 𝚅.1 🥷`,
-                body: `Active Now: ${hours}h ${minutes}m`,
-                mediaType: 1,
-                thumbnailUrl: useLogo, // මෙතනට පොඩි ලෝගෝ එක
-                sourceUrl: ashiya,
-                renderLargerThumbnail: true // මේක true කළාම තමයි ලොකුවට පේන්නේ
             }
         }
     }, { quoted: shonux });
-
   } catch (err) {
-    console.error('menu error:', err);
+    console.error('menu command error:', err);
+    try { await socket.sendMessage(sender, { text: '❌ Failed to show menu.'+err }, { quoted: msg }); } catch(e){}
   }
   break;
 }
+
 // ==================== DOWNLOAD MENU ====================
 case 'download': {
   try { await socket.sendMessage(sender, { react: { text: "📥", key: msg.key } }); } catch(e){}
@@ -3560,7 +3527,7 @@ END:VCARD`
 │ 🎞️ ${config.PREFIX}video [query]
 │ ❌ ${config.PREFIX}xvideo [query]
 │ 🔞 ${config.PREFIX}xnxx [query]
-│ 📘 ${config.PREFIX}fb1 [url]
+│ 📘 ${config.PREFIX}fb [url]
 │ 📸 ${config.PREFIX}ig [url]
 ╰━━━━━━━━━━━━━━╯
 
@@ -3623,25 +3590,29 @@ END:VCARD`
         }
     };
 
-    const text = `
-*╭─────────────●►*  
-*│🛠️ 𝐓𝐎𝐎𝐋 𝐌𝐄𝐍𝐔
-*╰─────────────●►*
-*╭─「𝐀𝐈 𝐓𝐎𝐎𝐋」────┈⊷*
-*│* ${config.PREFIX}ai [message]
-*│* ${config.PREFIX}aiimg [prompt]
-*│* ${config.PREFIX}aiimg2 [prompt]
-*╰──────────────┈⊷*
-*╭─「𝐅𝐀𝐍𝐒𝐘 𝐓𝐎𝐎𝐋」─┈⊷
-*│* ${config.PREFIX}font [text]
-*╰───────────────┈⊷*
-*╭─「𝐃𝐏 𝐓𝐎𝐎𝐋」────┈⊷
-*│*${config.PREFIX}getdp [number]
-*╰───────────────┈⊷
-*╭─「𝐌𝐄𝐃𝐄𝐀 𝐓𝐎𝐎𝐋」─┈⊷
-*│*${config.PREFIX}save (reply to status) 
-*╰──────────────┈⊷*
-> *© 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*
+    const text = `╔═══❖•ೋ°💠°ೋ•❖═══╗
+    💫 *『 𝐓𝐎𝐎𝐋 𝐌𝐄𝐍𝐔 』* 💫
+╚═══❖•ೋ°💠°ೋ•❖═══╝
+
+╭──◎「 𝐀𝐈 𝐓𝐎𝐎𝐋 」◎───╮
+│ 🤖 ${config.PREFIX}ai [message]
+│ 🧠 ${config.PREFIX}aiimg [prompt]
+│ 🎨 ${config.PREFIX}aiimg2 [prompt]
+╰──────────────╯
+
+╭─◎「 𝐅𝐀𝐍𝐒𝐘 𝐓𝐎𝐎𝐋 」◎─╮
+│ ✨ ${config.PREFIX}font [text]
+╰─────────────╯
+
+╭──◎「 𝐃𝐏 𝐓𝐎𝐎𝐋 」◎───╮
+│ 📸 ${config.PREFIX}getdp [number]
+╰──────────────╯
+
+╭──◎「 𝐌𝐄𝐃𝐈𝐀 𝐓𝐎𝐎𝐋 」◎─╮
+│ 💾 ${config.PREFIX}save (reply to status)
+│ 📵 ${config.PREFIX}save (oneviwe phota)
+╰──────────────╯
+> *© 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋* 
 `.trim();
 
     const buttons = [
@@ -3692,46 +3663,51 @@ END:VCARD`
         }
     };
 
-    const text = `
-*╭─────────────────●►*
-*│🛠️ OTHE MENU*
-*╰─────────────────●►*
+    const text = `╔═══•❥🌸❥•═══╗
+     👑 *『 𝐎𝐓𝐇𝐄𝐑 𝐌𝐄𝐍𝐔 』*
+╚═══•❥🌸❥•═══╝
 
-*╭─「𝐈𝐍𝐅𝐎 𝐂𝐌𝐃」─┈⊷*
-*│* ${config.PREFIX}jid
-*│* ${config.PREFIX}cid [channel-link]
-*│* ${config.PREFIX}system
-*╰───────────────────┈⊷
-*╭─「 𝐆𝐑𝐎𝐔𝐏 𝐂𝐌𝐃 」─┈⊷*
-*│* ${config.PREFIX}tagall [message]
-*│* ${config.PREFIX}online
-*╰───────────────────┈⊷
-*╭─「𝐍𝐄𝐖𝐒 𝐂𝐌𝐃」────┈⊷*
-*│* ${config.PREFIX}adanews
-*│* ${config.PREFIX}sirasanews
-*│* ${config.PREFIX}lankadeepanews
-*│* ${config.PREFIX}gagananews
-*╰───────────────────┈⊷
-*╭─「𝐔𝐒𝐄𝐑 𝐂𝐌𝐃」────┈⊷*
-*│* ${config.PREFIX}block [number]
-*│* ${config.PREFIX}unblock [number]
-*│* ${config.PREFIX}prefix
-*│* ${config.PREFIX}autorecording
-*│* ${config.PREFIX}mread
-*│* ${config.PREFIX}creject
-*│* ${config.PREFIX}wtyp
-*│* ${config.PREFIX}arm
-*│* ${config.PREFIX}rstatus
-*│* ${config.PREFIX}botpresence
-*╰───────────────────┈⊷
-*╭─「𝐒𝐄𝐀𝐑𝐂𝐇 𝐂𝐌𝐃」────┈⊷*
-*│* ${config.PREFIX}img [query]
-*│* ${config.PREFIX}google [query]
-*╰───────────────────┈⊷
-*╭─「𝐂𝐇𝐄𝐂𝐊 𝐂𝐌𝐃」─┈⊷*
-*│* ${config.PREFIX}ping
-*│* ${config.PREFIX}alive
-*╰──────────────┈⊷
+╭⊱◈「 💡 𝐈𝐍𝐅𝐎 𝐂𝐌𝐃 」◈⊰──╮
+│ ✨ ${config.PREFIX}jid
+│ 🔗 ${config.PREFIX}cid [channel-link]
+│ ⚙️ ${config.PREFIX}system
+╰──────────────╯
+
+╭⊱◈「 👥 𝐆𝐑𝐎𝐔𝐏 𝐂𝐌𝐃 」◈⊰─╮
+│ 📣 ${config.PREFIX}tagall [message]
+│ 🕓 ${config.PREFIX}online
+╰──────────────╯
+
+╭⊱◈「 📰 𝐍𝐄𝐖𝐒 𝐂𝐌𝐃 」◈⊰──╮
+│ 🗞️ ${config.PREFIX}adanews
+│ 🧭 ${config.PREFIX}sirasanews
+│ 🌍 ${config.PREFIX}lankadeepanews
+│ 💫 ${config.PREFIX}gagananews
+╰──────────────╯
+
+╭⊱◈「 👑 𝐔𝐒𝐄𝐑 𝐂𝐌𝐃 」◈⊰──╮
+│ 🚫 ${config.PREFIX}block [number]
+│ ✅ ${config.PREFIX}unblock [number]
+│ ⛓️ ${config.PREFIX}prefix
+│ 🎧 ${config.PREFIX}autorecording
+│ 💌 ${config.PREFIX}mread
+│ ❌ ${config.PREFIX}creject
+│ 💬 ${config.PREFIX}wtyp
+│ 🛡️ ${config.PREFIX}arm
+│ ⚡ ${config.PREFIX}rstatus
+│ 🤖 ${config.PREFIX}botpresence
+╰──────────────╯
+
+╭⊱◈「 🔎 𝐒𝐄𝐀𝐑𝐂𝐇 𝐂𝐌𝐃 」◈⊰─╮
+│ 🖼️ ${config.PREFIX}img [query]
+│ 🌐 ${config.PREFIX}google [query]
+╰──────────────╯
+
+╭⊱◈「 💫 𝐂𝐇𝐄𝐂𝐊 𝐂𝐌𝐃 」◈⊰─╮
+│ 📶 ${config.PREFIX}ping
+│ 💎 ${config.PREFIX}alive
+╰──────────────╯
+> © 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋 — 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚂𝙰𝙽𝚄 𝚇𝙳
 `.trim();
 
     const buttons = [
@@ -3776,7 +3752,7 @@ case 'getdp': {
         try {
             ppUrl = await socket.profilePictureUrl(jid, "image");
         } catch {
-            ppUrl = "https://files.catbox.moe/2y5cr4.jpeg"; // default dp
+            ppUrl = "https://files.catbox.moe/paap2h.jpg"; // default dp
         }
 
         // 🔹 BotName meta mention
@@ -3861,44 +3837,60 @@ case 'resetconfig': {
   break;
 }
 
-		        case 'owner': {
-    const ownerNumber = '+94783162197';
-    const ownerName = '𝐎𝐋𝐃 𝐒𝐀𝐍𝐔 𝐗𝐃';
-    const organization = '*QUEEN IMALSHA MD* WHATSAPP BOT DEVALOPER🙊';
+case 'owner': {
+  try { await socket.sendMessage(sender, { react: { text: "🥷", key: msg.key } }); } catch(e){}
 
-    const vcard = 'BEGIN:VCARD\n' +
-                  'VERSION:3.0\n' +
-                  `FN:${ownerName}\n` +
-                  `ORG:${organization};\n` +
-                  `TEL;type=CELL;type=VOICE;waid=${ownerNumber.replace('+', '')}:${ownerNumber}\n` +
-                  'END:VCARD';
+  try {
+    let userCfg = {};
+    try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; } catch(e){ userCfg = {}; }
+    const title = userCfg.botName || 'Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋';
 
-    try {
-        // Send vCard contact
-        const sent = await socket.sendMessage(from, {
-            contacts: {
-                displayName: ownerName,
-                contacts: [{ vcard }]
+    const shonux = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_AI_FAKE_ID_OWNER"
+        },
+        message: {
+            contactMessage: {
+                displayName: title,
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:${title};;;;
+FN:${title}
+ORG:Meta Platforms
+TEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002
+END:VCARD`
             }
-        });
+        }
+    };
 
-        // Then send message with reference
-        await socket.sendMessage(from, {
-            text: `*🙊IMALSHA MD OWNER*\n\n👤 Name: ${ownerName}\n📞 Number: ${ownerNumber}\n\n> © 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋`,
-            contextInfo: {
-                mentionedJid: [`${ownerNumber.replace('+', '')}@s.whatsapp.net`],
-                quotedMessageId: sent.key.id
-            }
-        }, { quoted: msg });
+    const text = `
+👑 *QUEEN IMALSHA💗🙊*
 
-    } catch (err) {
-        console.error('❌ Owner command error:', err.message);
-        await socket.sendMessage(from, {
-            text: '❌ Error sending owner contact.'
-        }, { quoted: msg });
-    }
+*👤 𝐍ame: ꜱᴀɴᴜ xᴅ*
+*📞 𝐍umber: +94785893445*
 
-    break;
+> *© 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*
+`.trim();
+
+    const buttons = [
+      { buttonId: `${config.PREFIX}menu`, buttonText: { displayText: "📜 MENU" }, type: 1 },
+      { buttonId: `${config.PREFIX}settings`, buttonText: { displayText: "⚙️ SETTINGS" }, type: 1 }
+    ];
+
+    await socket.sendMessage(sender, {
+      text,
+      footer: "🥷 𝐎ᴡɴᴇʀ 𝐈ɴꜰᴏʀᴍᴀᴛɪᴏɴ",
+      buttons
+    }, { quoted: shonux });
+
+  } catch (err) {
+    console.error('owner command error:', err);
+    try { await socket.sendMessage(sender, { text: '❌ Failed to show owner info.' }, { quoted: msg }); } catch(e){}
+  }
+  break;
 }
 case 'google':
 case 'gsearch':
