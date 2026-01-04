@@ -3403,7 +3403,7 @@ case 'system': {
   break;
 }
 case 'menu': {
-  try { await socket.sendMessage(sender, { react: { text: "💎", key: msg.key } }); } catch(e){}
+  try { await socket.sendMessage(sender, { react: { text: "🗒️", key: msg.key } }); } catch(e){}
 
   try {
     const startTime = socketCreationTime.get(number) || Date.now();
@@ -3412,114 +3412,56 @@ case 'menu': {
     const minutes = Math.floor((uptime % 3600) / 60);
     const seconds = Math.floor(uptime % 60);
 
-    // load per-session config (logo, botName)
     let userCfg = {};
     try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; }
     catch(e){ console.warn('menu: failed to load config', e); userCfg = {}; }
 
-    const title = userCfg.botName || 'Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ 〽️ᴅ🦋';
-    
-// 🔹 Video Note Section (වෙනස් කළේ මෙතන පමණි)
+    const title = userCfg.botName || '𝐀𝐒𝐇𝐈𝐘𝐀-𝐌𝐃 🥷🇱🇰';
+    const MenuImg = 'https://files.catbox.moe/2c9ak5.jpg'; // ප්‍රධාන පින්තූරය
+    const useLogo = userCfg.logo || MenuImg; // External Ad එකට යන පින්තූරය
+
+    // 🎥 1. Video Note Section
     await socket.sendMessage(sender, {
-        video: { url: 'https://files.catbox.moe/e5o6r7.mp4' },
+        video: { url: 'https://files.catbox.moe/l77xch.mp4' },
         ptv: true 
     });
 
-    // මැසේජ් දෙක පටලැවෙන්නේ නැති වෙන්න පොඩි Delay එකක්
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     // 🔹 Fake contact for Meta AI mention
     const shonux = {
-        key: {
-            remoteJid: "status@broadcast",
-            participant: "0@s.whatsapp.net",
-            fromMe: true,
-            id: "META_AI_FAKE_ID_MENU"
-        },
-        message: {
-            contactMessage: {
-                displayName: title,
-                vcard: `BEGIN:VCARD
-VERSION:3.0
-N:${title};;;;
-FN:${title}
-ORG:Meta Platforms
-TEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002
-END:VCARD`
-            }
-        }
+        key: { remoteJid: "status@broadcast", participant: "0@s.whatsapp.net", fromMe: false, id: "META_AI_FAKE_ID_MENU" },
+        message: { contactMessage: { displayName: title, vcard: `BEGIN:VCARD\nVERSION:3.0\nN:${title};;;;\nFN:${title}\nORG:Meta Platforms\nTEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002\nEND:VCARD` } }
     };
-	  const date = new Date();
+
+    const date = new Date();
     const slstDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
     const formattedTime = slstDate.toLocaleTimeString();
     const hour = slstDate.getHours();
     const greetings = hour < 12 ? 'ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ..🌅' :
                       hour < 17 ? 'ɢᴏᴏᴅ ᴀꜰᴛᴇʀɴᴏᴏɴ..🌞' :
                       hour < 20 ? 'ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ..🌆' : 'ɢᴏᴏᴅ ɴɪɢʜᴛ..🌙';
-	const nuroweb = 'https://queen-imalsha-md-1eca61eef369.herokuapp.com';
+    const ashiya = 'https://ashiya-ai.vercel.app/';
+    
     const text = `
-*╭══〔🙊QUEEN IMALSHA💗〕═┈⊷*
-*║👋𝙷𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 𝙼𝙳 𝙱𝙾𝚃 𝚄𝚂𝙴𝚁**
-*╰═════════════┈⊷*  
-*╭═「✨BOT STATUS🧚‍♂️」 ═┈⊷*
-*║🙊* *\`ɢʀᴇᴇᴛɪɴɢ:\`* *\`${greetings}\`*
-*║〽️* *\`ʙᴏᴛ ɴᴀᴍᴇ:\`* *𝚀𝚄𝙴𝚁𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰*
-*║👑* *\`ᴏᴡɴᴇʀ :\`* *ꜱᴀɴᴜ*
-*║📆* *\`ᴅᴀᴛᴇ:\`* *${slstDate}*
-*║🕜* *\`ᴛɪᴍᴇ:\`* *${formattedTime}*
-*╰══════════════┈⊷*
-*🌐Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ ᴡᴇʙ:-* ${nuroweb}
+*╭──〔 𝐀𝐒𝐇𝐈𝐘𝐀-𝐌𝐄𝐍𝐔 〕─┈⊷*
+*│👋 𝙷𝙴𝙻𝙻𝙾 𝚄𝚂𝙴𝚁*
+*╰──────────────┈⊷* *╭─「 𝐁ot 𝐒tatus 」 ─┈⊷*
+*│🍷* *\`ɢʀᴇᴇᴛɪɴɢ:\`* *\`${greetings}\`*
+*│📄* *\`ʙᴏᴛ ɴᴀᴍᴇ:\`* *𝙰𝚂𝙷𝙸𝚈𝙰 𝙼𝙳*
+*│👑* *\`ᴏᴡɴᴇʀ :\`* *𝙰𝚈𝙴𝚂𝙷 𝚃𝙷𝙴𝙼𝙸𝚈𝙰*
+*│⏳* *\`ᴜᴘᴛɪᴍᴇ:\`* *${hours}h ${minutes}m ${seconds}s*
+*╰───────────────┈⊷*
 
-> *© 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙸𝙼𝙰𝙻𝚂𝙷𝙰 〽️𝙳🦋*
-`.trim();
-	  
-	  /*let vpsOptions = [
-        { title: "📥 DOWNLOAD MENU", description: "© ɢᴇᴛ ᴅᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}download` },
-		  { title: "🛠️ TOOL MENU", description: "© ɢᴇᴛ ᴛᴏᴏʟ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}tool` },
-		  { title: "🚀 OTHER MENU", description: "© ɢᴇᴛ ᴏᴛʜᴇʀᴇ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}other` },
-		  { title: "⚙️ SETTINGS MENU", description: "© ɢᴇᴛ ꜱᴇᴛᴛɪɴɢꜱ ᴍᴇɴᴜ", buttonId: `${config.PREFIX}settings` },
-        { title: "👑 OWNER", description: "© ɢᴇᴛ ᴏᴡɴᴇʀ", buttonId: `${config.PREFIX}owner` }
-    ];*/
-	  let rows = [
+> *𝐏𝐎𝐖𝐄𝐑𝐃 𝘽𝙔 𝐀𝐒𝐇𝐈𝐘𝐀-𝐌𝐃 🥷🇱🇰*`.trim();
 
-  {
-    title: "JOIN CHANNEL",
-    description: "Follow our WhatsApp Channel",
-    id: "https://whatsapp.com/channel/XXXXXXXXXXXX"
-  },
-  {
-    title: "📥 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄",
-    description: "DOWANLOAD",
-    id: `${config.PREFIX}download`
-  },
-  {
-    title: "🛠️ ᴛᴏᴏʟ ᴍᴇɴᴜ",
-    description: "TOOLS",
-    id: `${config.PREFIX}tool`
-  },
-  {
-    title: "🚀 𝙾𝚃𝙷𝙴𝚁 𝙼𝙴𝙽𝚄",
-    description: ".OTHER MENU",
-    id: `${config.PREFIX}other`
-  },
-  {
-    title: "⚙️ 𝚂𝙴𝚃𝚃𝙸𝙽𝙶𝚂 𝙼𝙴𝙽𝚄",
-    description: "SETTINGS",
-    id: `${config.PREFIX}settings`
-  },
-  {
-    title: "👑 OWNER",
-    description: "OWNER",
-    id: `${config.PREFIX}owner`
-  }
-];
-
-   let buttonSections = [
-        {
-            title: "Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ Mᴅ ᴍᴇɴᴜ ᴄᴏᴍᴍᴀɴᴅꜱ",
-            highlight_label: "Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ Mᴅ💗🙊",
-            rows: rows
-        }
+    let rows = [
+      { title: "JOIN CHANNEL", description: "Follow our WhatsApp Channel", id: "https://whatsapp.com/channel/XXXXXXXXXXXX" },
+      { title: "📥 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄", description: "DOWNLOAD CMD", id: `${config.PREFIX}download` },
+      { title: "🛠️ ᴛොොලො ᴍᴇɴᴜ", description: "TOOLS", id: `${config.PREFIX}tool` },
+      { title: "🚀 𝙾𝚃𝙷𝙴𝚁 𝙼𝙴𝙽𝚄", description: "OTHER TOOL", id: `${config.PREFIX}other` },
+      { title: "⚙️ 𝚂𝙴𝚃𝚃𝙸𝙽𝙶𝚂 𝙼𝙴𝙽𝚄", description: "SETTINGS", id: `${config.PREFIX}settings` },
+      { title: "👑 OWNER", description: "OWNER", id: `${config.PREFIX}owner` }
     ];
 
     let buttons = [
@@ -3530,45 +3472,45 @@ END:VCARD`
             nativeFlowInfo: {
                 name: "single_select",
                 paramsJson: JSON.stringify({
-                    title: "QUEEN MENU TAB💗🙊",
-                    sections: buttonSections
+                    title: "CHOOSE MENU TAB",
+                    sections: [{ title: "ASHIA MD MENU", rows: rows }]
                 })
             }
         },
-        {
-            buttonId: `${config.PREFIX}ping`,
-            buttonText: { displayText: '⚡ PING' },
-            type: 1
-        },
-        {
-            buttonId: `${config.PREFIX}owner`,
-            buttonText: { displayText: '👑 OWNER' },
-            type: 1
-        }
+        { buttonId: `${config.PREFIX}ping`, buttonText: { displayText: '⚡ PING' }, type: 1 },
+        { buttonId: `${config.PREFIX}owner`, buttonText: { displayText: '👑 OWNER' }, type: 1 }
     ];
-    const MenuImg = 'https://files.catbox.moe/2y5cr4.jpeg';
-    const useLogo = userCfg.logo || MenuImg;
 
+    // 🚀 2. Final Message with Dual Logo Style
     await socket.sendMessage(sender, {
-        buttons,
-        headerType: 1,
-        viewOnce: true,
+        image: { url: MenuImg },
         caption: text,
-        image:{ url:MenuImg },
+        buttons: buttons,
+        headerType: 4,
+        viewOnce: true,
         contextInfo: {
             mentionedJid: [sender], 
             forwardingScore: 999,
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363406261194661@newsletter',
-                newsletterName: 'Qᴜᴇᴇɴ ɪᴍᴀʟꜱʜᴀ Mᴅ',
+                newsletterJid: '120363422488896913@newsletter',
+                newsletterName: '𝙰𝚂𝙷𝙸𝚈𝙰 𝙼𝙳 𝚅.1',
                 serverMessageId: 143
+            },
+            // මෙන්න මේ කොටසින් තමයි අර උඩින් ලෝගෝ දෙකක් එන විදියට හැදෙන්නේ
+            externalAdReply: {
+                title: `𝙰𝚂𝙷𝙸𝚈𝙰-𝙼𝙳 𝚅.1 🥷`,
+                body: `Active Now: ${hours}h ${minutes}m`,
+                mediaType: 1,
+                thumbnailUrl: useLogo, // මෙතනට පොඩි ලෝගෝ එක
+                sourceUrl: ashiya,
+                renderLargerThumbnail: true // මේක true කළාම තමයි ලොකුවට පේන්නේ
             }
         }
     }, { quoted: shonux });
+
   } catch (err) {
-    console.error('menu command error:', err);
-    try { await socket.sendMessage(sender, { text: '❌ Failed to show menu.'+err }, { quoted: msg }); } catch(e){}
+    console.error('menu error:', err);
   }
   break;
 }
